@@ -1,24 +1,12 @@
 "use client";
+
+import { SocialSignInButtons } from "@/components/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { GitHub, Google } from "@/icons";
-import { Eye, EyeOff, Check, X } from "lucide-react";
-import {
-  useState,
-  useCallback,
-  useMemo,
-  memo,
-  type ChangeEvent,
-  type FormEvent,
-} from "react";
-
-interface FormData {
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-}
+import { useAuth } from "@/hooks/use-auth";
+import { Eye, EyeOff, Check, X, Loader2 } from "lucide-react";
+import { useState, useCallback, useMemo, memo } from "react";
 
 interface PasswordCheckItem {
   label: string;
@@ -66,35 +54,26 @@ const PasswordCheckItem = memo<{
 PasswordCheckItem.displayName = "PasswordRequirementItem";
 
 export default function SignUpPage() {
+  const { handleSignUp, isLoading, signUpForm } = useAuth();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [formData, setFormData] = useState<FormData>({
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-  });
   const [passwordFocus, setPasswordFocus] = useState<boolean>(false);
 
-  const handleSubmit = useCallback(
-    (e: FormEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      console.log("Form submitted:", formData);
-    },
-    [formData]
-  );
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = signUpForm;
 
-  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  }, []);
+  const password = watch("password");
 
   const togglePasswordVisibility = useCallback(() => {
     setShowPassword((prev) => !prev);
   }, []);
 
   const showPasswordStrength = useMemo(
-    () => passwordFocus || formData.password.length > 0,
-    [passwordFocus, formData.password.length]
+    () => passwordFocus || password.length > 0,
+    [passwordFocus, password.length]
   );
 
   return (
@@ -108,7 +87,10 @@ export default function SignUpPage() {
             <p className="text-sm">Welcome! Create an account to get started</p>
           </div>
 
-          <div className="space-y-5 mt-5">
+          <form
+            onSubmit={handleSubmit(handleSignUp)}
+            className="space-y-5 mt-5"
+          >
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
                 <Label htmlFor="firstname" className="block text-sm">
@@ -117,13 +99,17 @@ export default function SignUpPage() {
                 <Input
                   type="text"
                   required
-                  name="firstname"
                   id="firstname"
-                  value={formData.firstname}
-                  onChange={handleChange}
                   placeholder="John"
                   autoComplete="given-name"
+                  {...register("firstname")}
+                  className={errors.firstname ? "border-destructive" : ""}
                 />
+                {errors.firstname && (
+                  <p className="mt-2 text-xs text-destructive">
+                    {errors.firstname.message}
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="lastname" className="block text-sm">
@@ -132,13 +118,17 @@ export default function SignUpPage() {
                 <Input
                   type="text"
                   required
-                  name="lastname"
                   id="lastname"
-                  value={formData.lastname}
-                  onChange={handleChange}
                   placeholder="Doe"
                   autoComplete="family-name"
+                  {...register("lastname")}
+                  className={errors.lastname ? "border-destructive" : ""}
                 />
+                {errors.lastname && (
+                  <p className="mt-2 text-xs text-destructive">
+                    {errors.lastname.message}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -149,13 +139,17 @@ export default function SignUpPage() {
               <Input
                 type="email"
                 required
-                name="email"
                 id="email"
-                value={formData.email}
-                onChange={handleChange}
                 placeholder="john.doe@example.com"
                 autoComplete="email"
+                {...register("email")}
+                className={errors.email ? "border-destructive" : ""}
               />
+              {errors.email && (
+                <p className="mt-2 text-xs text-destructive">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -166,21 +160,27 @@ export default function SignUpPage() {
                 <Input
                   type={showPassword ? "text" : "password"}
                   required
-                  name="password"
                   id="password"
-                  value={formData.password}
-                  onChange={handleChange}
                   onFocus={() => setPasswordFocus(true)}
-                  onBlur={() => setPasswordFocus(false)}
-                  className="pr-10"
                   placeholder="Create a strong password"
                   autoComplete="new-password"
+                  {...register("password")}
+                  className={
+                    errors.password ? "pr-10 border-destructive" : "pr-10"
+                  }
                 />
+                {errors.password && (
+                  <p className="mt-2 text-xs text-destructive">
+                    {errors.password.message}
+                  </p>
+                )}
+
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                   aria-label={showPassword ? "Hide password" : "Show password"}
+                  disabled={password.length === 0}
                 >
                   {showPassword ? (
                     <EyeOff className="w-4 h-4" />
@@ -203,38 +203,21 @@ export default function SignUpPage() {
                     <PasswordCheckItem
                       key={idx}
                       checkItem={item}
-                      password={formData.password}
+                      password={password}
                     />
                   ))}
                 </div>
               )}
             </div>
 
-            <Button onClick={handleSubmit} className="w-full" type="submit">
+            <Button className="w-full" type="submit" disabled={isLoading}>
+              {isLoading && <Loader2 className=" w-4 h-4 animate-spin" />}{" "}
               Continue
             </Button>
-          </div>
+          </form>
 
           <hr className="my-4 border-dashed" />
-
-          <div className="mt-6 grid grid-cols-2 gap-3">
-            <Button
-              type="button"
-              variant="outline"
-              aria-label="Sign up with Google"
-            >
-              <Google />
-              <span>Google</span>
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              aria-label="Sign up with GitHub"
-            >
-              <GitHub />
-              <span>GitHub</span>
-            </Button>
-          </div>
+          <SocialSignInButtons />
         </div>
 
         <div className="bg-muted rounded-(--radius) border p-3">
