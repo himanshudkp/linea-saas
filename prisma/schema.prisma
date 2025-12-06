@@ -8,15 +8,17 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean   @default(false)
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @default(now()) @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+  id             String          @id
+  name           String
+  email          String
+  emailVerified  Boolean         @default(false)
+  image          String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @default(now()) @updatedAt
+  sessions       Session[]
+  accounts       Account[]
+  creditsLedgers CreditsLedger[]
+  subscriptions  Subscription[]
 
   @@unique([email])
   @@map("user")
@@ -65,4 +67,50 @@ model Verification {
   updatedAt  DateTime @default(now()) @updatedAt
 
   @@map("verification")
+}
+
+model CreditsLedger {
+  id             String  @id @default(cuid())
+  userId         String
+  subscriptionId String
+  amount         Float
+  type           String
+  reason         String?
+  idempotencyKey String?
+  meta           Json?
+
+  user         User         @relation(fields: [userId], references: [id])
+  subscription Subscription @relation(fields: [subscriptionId], references: [id])
+
+  @@index([subscriptionId], map: "idx_creditsLedger_subscriptionId")
+  @@index([userId], map: "idx_creditsLedger_userId")
+  @@index([idempotencyKey], map: "idx_creditsLedger_idempotencyKey")
+}
+
+model Subscription {
+  id                    String  @id @default(cuid())
+  userId                String
+  polarCustomerId       String
+  polarSubscriptionId   String
+  productId             String?
+  priceId               String?
+  planCode              String?
+  status                String
+  currentPeriodEnd      BigInt?
+  trialEndsAt           BigInt?
+  cancelAt              BigInt?
+  canceledAt            BigInt?
+  seats                 Int?
+  metadata              Json?
+  creditsBalance        Int
+  creditsGrantPerPeriod Int
+  creditsRolloverLimit  Int
+  lastGrantCursor       String?
+
+  user   User            @relation(fields: [userId], references: [id])
+  ledger CreditsLedger[]
+
+  @@index([userId], map: "idx_subscription_userId")
+  @@index([polarSubscriptionId], map: "idx_subscription_polarSubscriptionId")
+  @@index([status], map: "idx_subscription_status")
 }
