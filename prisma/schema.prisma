@@ -134,7 +134,7 @@ model projects {
   createdAt           Int
   updatedAt           Int
 
-  @@index([userId], map: "idx_userId")
+  @@index([userId], map: "idx_projects_userId")
 }
 
 model project_counters {
@@ -142,5 +142,5 @@ model project_counters {
   userId            String
   nextProjectNumber Int
 
-  @@index([userId], name: "by_userId")
+  @@index([userId], name: "by_projects_counters_userId")
 }

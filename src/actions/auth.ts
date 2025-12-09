@@ -126,7 +126,7 @@ export const requestPasswordReset = async (
   email: string
 ): Promise<ActionResponse> => {
   try {
-    const result = await auth.api.forgetPassword({
+    const result = await auth.api.requestPasswordReset({
       body: {
         email: email.toLowerCase().trim(),
         redirectTo: `${BASE_URL}/reset-password`,
