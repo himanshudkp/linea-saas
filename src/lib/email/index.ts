@@ -1,8 +1,8 @@
 import type { EmailParams, SendEmail } from "@/lib/types";
 import nodemailer from "nodemailer";
 import type { Transporter } from "nodemailer";
-import { EmailConfigurationError, EmailSendError } from "./error";
-import { SMTP_CONFIG } from "./config";
+import { EmailConfigurationError, EmailSendError } from "../error";
+import { SMTP_CONFIG } from "../config";
 import {
   APP_NAME,
   EMAIL_ERROR_MESSAGES,
@@ -12,7 +12,7 @@ import {
   RESET_PASSWORD_SUBJECT,
   RETRY_DELAY,
   VERIFY_EMAIL_SUCCESS_SUBJECT,
-} from "./constants";
+} from "../contants";
 
 let transporter: Transporter | null = null;
 

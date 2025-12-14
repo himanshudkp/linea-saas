@@ -1,5 +1,5 @@
 import type { ActionResponse, AuthApiError, ErrorCode } from "@/lib/types";
-import { AUTH_ERROR_MESSAGES } from "./constants";
+import { AUTH_ERROR_MESSAGES } from "../contants";
 
 export class AuthError extends Error {
   constructor(

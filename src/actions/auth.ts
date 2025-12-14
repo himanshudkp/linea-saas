@@ -1,7 +1,7 @@
 "use server";
 
-import { auth } from "@/lib/auth";
-import { AUTH_ERROR_MESSAGES, BASE_URL } from "@/lib/constants";
+import { auth } from "@/lib/utils/index";
+import { AUTH_ERROR_MESSAGES, BASE_URL } from "@/lib/contants";
 import {
   createErrorResponse,
   createSuccessResponse,

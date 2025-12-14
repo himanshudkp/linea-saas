@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/lib/auth";
+import { auth } from "@/lib/utils/index";
 import { prisma } from "@/lib/prisma";
 import {
   combinedSlug,
@@ -10,7 +10,7 @@ import {
 } from "@/lib/utils";
 import type { Entitlement, Response } from "@/lib/types";
 import { headers } from "next/headers";
-import { ERRORS } from "@/lib/constants";
+import { ERRORS } from "@/lib/contants";
 import { User } from "../../generated/prisma/client";
 
 export const authenticateUser = async (): Promise<

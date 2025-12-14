@@ -5,6 +5,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { ReduxProvider } from "@/providers/redux-provider";
 import { QueryProvider } from "@/providers/query-provider";
+import { getUserProfile } from "@/actions/user";
+import { extractNameFromEmail } from "@/lib/utils";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,11 +23,17 @@ export const metadata: Metadata = {
   description: "Sketch2Design is an AI-powered sketch-to-design tool.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const profileData = (await getUserProfile()).data;
+  const profile = {
+    ...profileData,
+    name: extractNameFromEmail(profileData?.email!),
+  };
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -38,7 +46,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ReduxProvider>
+          <ReduxProvider
+            preloadedState={{
+              profile,
+            }}
+          >
             <QueryProvider>
               {children}
               <Toaster />

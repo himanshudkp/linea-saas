@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { VALIDATION_MESSAGES } from "./constants";
+import { VALIDATION_MESSAGES } from "../contants";
 
 const emailSchema = z.string().email(VALIDATION_MESSAGES.EMAIL_INVALID);
 

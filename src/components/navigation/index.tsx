@@ -2,21 +2,14 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { ReactNode, useEffect } from "react";
-import { fetchUserProfile } from "@/store/slices/userProfileSlice";
-import {
-  CircleQuestionMark,
-  Hash,
-  LayoutTemplate,
-  Loader2,
-  TriangleAlert,
-  User2,
-} from "lucide-react";
+import { type ReactNode } from "react";
+import { CircleQuestionMark, Hash, LayoutTemplate, User2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { useUserProject } from "@/hooks/use-user-project";
+import { RootState, useAppSelector } from "@/store";
+import { CreateProject } from "../project";
+import { useUserProject } from "@/store/query/use-project-query";
 
 interface TabProps {
   label: string;
@@ -30,54 +23,28 @@ const TopNavigationBar = () => {
   const projectId = params.get("project");
   const hasCanvas = pathname.includes("canvas");
   const hasStyleGuide = pathname.includes("style-guide");
-  const {
-    data: projectData,
-    error: projectError,
-    isLoading: isProjectLoading,
-  } = useUserProject(projectId!);
-  const dispatch = useAppDispatch();
-  const {
-    data: profileData,
-    error: profileError,
-    loading: isProfileLoading,
-  } = useAppSelector((state) => state.userProfile);
+  const { data: project, error, isLoading } = useUserProject(projectId!);
+
+  const user = useAppSelector((store) => store.profile);
 
   const TABS: TabProps[] = [
     {
       label: "Canvas",
-      href: `/dashboard/${profileData?.name}/canvas?${projectId}`,
+      href: `/dashboard/${user?.name}/canvas?${projectId}`,
       icon: <Hash className="h-4 w-4" />,
     },
     {
       label: "Style Guide",
-      href: `/dashboard/${profileData?.name}/style-guide?project/${projectId}`,
+      href: `/dashboard/${user?.name}/style-guide?project/${projectId}`,
       icon: <LayoutTemplate className="h-4 w-4" />,
     },
   ];
-
-  useEffect(() => {
-    dispatch(fetchUserProfile());
-  }, []);
-
-  if (isProfileLoading || isProjectLoading)
-    return (
-      <div className="flex h-screen justify-center items-center">
-        <Loader2 className="text-black h-12 w-12" />
-      </div>
-    );
-
-  if (profileError || projectError)
-    return (
-      <div className="flex h-screen justify-center items-center">
-        <TriangleAlert className="text-red-700 h-12 w-12" />
-      </div>
-    );
 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-3 p-6 fixed top-0 left-0 right-0 z-50">
       <div className="flex items-center gap-2">
         <Link
-          href={`/dashboard`}
+          href={`/dashboard/${user?.name}`}
           className="w-8 h-8 rounded-full border-3 border-white bg-black flex items-center justify-center"
         >
           <div className="w-4 h-4 rounded-full bg-white" />
@@ -85,7 +52,7 @@ const TopNavigationBar = () => {
         {!hasCanvas ||
           (!hasStyleGuide && (
             <div className="lg:inline-block hidden rounded-full text-primary/60 border border-white[0.12] backdrop-blur-xl bg-white[0.08] px-4 py-2 text-sm saturate-150">
-              Project / {projectData?.data?.title}
+              Project / {project?.data?.title}
             </div>
           ))}
       </div>
@@ -128,13 +95,13 @@ const TopNavigationBar = () => {
           <CircleQuestionMark className="size-5 text-white" />
         </Button>
         <Avatar className="size-12 ml-2">
-          <AvatarImage src={"/images/logo.png"} />
+          <AvatarImage src={user?.image} />
           <AvatarFallback>
             <User2 className="size-5 text-black" />
           </AvatarFallback>
         </Avatar>
         {/* {hasCanvas && <AutoSave />} */}
-        {/* {!hasCanvas && !hasStyleGuide && <CreateProject />} */}
+        {!hasCanvas && !hasStyleGuide && <CreateProject />}
       </div>
     </div>
   );

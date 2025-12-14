@@ -1,5 +1,5 @@
 const DashboardSession = () => {
-  return <>DashboardSession</>;
+  return <></>;
 };
 
 export default DashboardSession;

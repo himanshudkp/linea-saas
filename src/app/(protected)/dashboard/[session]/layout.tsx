@@ -1,5 +1,5 @@
 import { getSubscriptionEntitlement } from "@/actions/user";
-import TopNavigationBar from "@/components/navigation/top-navigation-bar";
+import TopNavigationBar from "@/components/navigation";
 import { redirect } from "next/navigation";
 import { type ReactNode } from "react";
 
