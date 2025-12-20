@@ -1,8 +1,8 @@
-import { AuthFormWrapper } from "@/components/auth/AuthFormWrapper";
-import { AuthHeader } from "@/components/auth/AuthHeader";
-import { InfoBox } from "@/components/auth/InfoBox";
+import { AuthFormWrapper } from "@/components/auth-ui/auth-wrapper";
+import { AuthHeader } from "@/components/auth-ui/auth-header";
+import { InfoBox } from "@/components/auth-ui/info-box";
 import { Button } from "@/components/ui/button";
-import { useResendTimer } from "@/hooks/use-resend-timer";
+import { useResendTimer } from "@/hooks/use-timer";
 import { Mail, ArrowLeft, Clock } from "lucide-react";
 import Link from "next/link";
 

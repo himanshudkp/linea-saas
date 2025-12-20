@@ -5,11 +5,11 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, XCircle, Loader2, Mail } from "lucide-react";
 import { toast } from "sonner";
-import { verifyEmail } from "@/actions/auth";
 import Link from "next/link";
-import { AuthFormWrapper } from "@/components/auth/AuthFormWrapper";
-import { AuthHeader } from "@/components/auth/AuthHeader";
-import { InfoBox } from "@/components/auth/InfoBox";
+import { AuthFormWrapper } from "@/components/auth-ui/auth-wrapper";
+import { AuthHeader } from "@/components/auth-ui/auth-header";
+import { InfoBox } from "@/components/auth-ui/info-box";
+import { verifyEmail } from "@/actions/auth";
 
 type VerificationStatus = "verifying" | "success" | "error" | "expired";
 

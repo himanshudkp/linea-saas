@@ -3,8 +3,8 @@
 import { useCallback, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { Provider } from "@/types";
-import SocialSignInButton from "./SocialSignInButton";
-import { PROVIDERS } from "@/lib/constants";
+import SocialSignInButton from "./social-button";
+import { PROVIDERS } from "@/constants";
 
 const SocialSignInButtons = () => {
   const { handleSignInSocial } = useAuth();

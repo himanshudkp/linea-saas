@@ -1,4 +1,4 @@
-import { Provider } from "@/types";
+import type { Provider, ProviderConfig } from "@/types";
 
 export const AUTH_ERROR_MESSAGES = {
   OAUTH_ACCOUNT:
@@ -115,3 +115,53 @@ export const VALIDATION_MESSAGES = {
 };
 
 export const PROVIDERS: Provider[] = ["google", "github"];
+
+export const ERRORS = {
+  NOT_AUTHENTICATED: { status: 401, error: "User is not authenticated." },
+  USER_NOT_FOUND: {
+    status: 404,
+    error: "User does not exist in the database.",
+  },
+  SERVER_ERROR: {
+    status: 500,
+    error: "Internal server error while retrieving subscription.",
+  },
+  PROJECT_NOT_FOUND: {
+    status: 404,
+    error: "Project not found",
+  },
+  ACCESS_DENIED: {
+    status: 403,
+    error: "Access denied",
+  },
+  PROJECT_ID_NOT_FOUND: {
+    status: 404,
+    error: "Project not found.",
+  },
+} as const;
+
+export const SESSION_CONFIG = {
+  expiresIn: 60 * 60 * 24 * 7,
+  updateAge: 60 * 60 * 24,
+} as const;
+
+export const SMTP_CONFIG = {
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT) || 587,
+  secure: false,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+} as const;
+
+export const providerConfig: Record<Provider, ProviderConfig> = {
+  google: {
+    label: "Google",
+    ariaLabel: "Sign in with Google",
+  },
+  github: {
+    label: "GitHub",
+    ariaLabel: "Sign in with GitHub",
+  },
+} as const;

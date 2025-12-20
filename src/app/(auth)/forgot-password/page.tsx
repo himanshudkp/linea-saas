@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { Loader2, Mail, ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { AuthFormWrapper } from "@/components/auth/AuthFormWrapper";
-import { AuthHeader } from "@/components/auth/AuthHeader";
-import { FormField } from "@/components/auth/FormField";
-import { ErrorAlert } from "@/components/auth/ErrorAlert";
+import { AuthFormWrapper } from "@/components/auth-ui/auth-wrapper";
+import { AuthHeader } from "@/components/auth-ui/auth-header";
+import { FormField } from "@/components/auth-ui/form-field";
+import { ErrorAlert } from "@/components/auth-ui/error-alert";
 
 export default function ForgotPasswordPage() {
   const { forgotPasswordForm, handleForgotPassword, isLoading } = useAuth();

@@ -3,9 +3,9 @@
 import { memo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Provider } from "@/types";
-import { GitHub, Google } from "@/icons";
+import { GitHub, Google } from "@/components/social-icons";
 import { Loader2 } from "lucide-react";
-import { providerConfig } from "@/lib/config";
+import { providerConfig } from "@/constants";
 
 interface SocialSignInButtonProps {
   provider: Provider;

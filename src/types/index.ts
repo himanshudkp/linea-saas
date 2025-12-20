@@ -3,7 +3,7 @@ import {
   resetPasswordSchema,
   signInSchema,
   signUpSchema,
-} from "@/lib/schema";
+} from "@/schema";
 import { z } from "zod";
 
 export type Provider = "google" | "github";
@@ -75,3 +75,15 @@ export interface AuthApiError {
 }
 
 export type SocialProvider = "google" | "github";
+
+export interface Response<T> {
+  status: number;
+  data?: T;
+  error?: string;
+  message?: string;
+}
+
+export interface Entitlement {
+  entitlement: boolean;
+  profileName: string;
+}

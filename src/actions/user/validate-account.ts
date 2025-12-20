@@ -1,7 +1,9 @@
-import { AUTH_ERROR_MESSAGES } from "@/lib/constants";
-import { prisma } from "@/lib/prisma";
+"use server";
 
-export const validateCredentialAccount = async (userId: string) => {
+import { AUTH_ERROR_MESSAGES } from "@/constants";
+import { prisma } from "@/config/prisma";
+
+export const validateAccountCredential = async (userId: string) => {
   const account = await prisma.account.findFirst({
     where: { userId, providerId: "credential" },
     select: { providerId: true },

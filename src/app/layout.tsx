@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
-import { ThemeProvider } from "../providers/theme-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
+import { ReduxProvider } from "@/providers/redux-provider";
+import { QueryProvider } from "@/providers/query-provider";
+import { extractNameFromEmail } from "@/utils";
+import { getUserProfile } from "@/actions/user";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,11 +23,17 @@ export const metadata: Metadata = {
   description: "Sketch2Design is an AI-powered sketch-to-design tool.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const profileData = (await getUserProfile()).data;
+  const profile = {
+    ...profileData,
+    name: extractNameFromEmail(profileData?.email!),
+  };
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -36,8 +46,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
-          <Toaster />
+          <ReduxProvider
+            preloadedState={{
+              profile,
+            }}
+          >
+            <QueryProvider>
+              {children}
+              <Toaster />
+            </QueryProvider>
+          </ReduxProvider>
         </ThemeProvider>
       </body>
     </html>

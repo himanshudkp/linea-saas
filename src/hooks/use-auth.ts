@@ -18,7 +18,7 @@ import {
   resetPasswordSchema,
   signInSchema,
   signUpSchema,
-} from "@/lib/schema";
+} from "@/schema";
 
 import {
   signIn,

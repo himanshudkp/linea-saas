@@ -1,28 +1,28 @@
-import { betterAuth } from "better-auth";
-import { prismaAdapter } from "better-auth/adapters/prisma";
-import { nextCookies } from "better-auth/next-js";
+import { validateAccountCredential } from "@/actions/user";
+import type { BetterAuthCallback } from "../types";
 import {
   sendPasswordResetEmail,
   sendPasswordResetSuccessEmail,
   sendVerificationEmail,
-} from "./email";
-import { prisma } from "./prisma";
+} from "../utils/email";
 import {
   AUTH_ERROR_MESSAGES,
   BASE_URL,
   BETTER_AUTH_COOKIE_PREFIX,
   BETTER_AUTH_DB_PROVIDER,
-} from "./constants";
-import { SESSION_CONFIG } from "./config";
-import { validateCredentialAccount } from "@/actions/user";
-import type { BetterAuthCallback } from "@/types";
+  SESSION_CONFIG,
+} from "../constants";
+import { betterAuth } from "better-auth";
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { nextCookies } from "better-auth/next-js";
+import { prisma } from "./prisma";
 
 async function handlePasswordReset({
   user,
   url,
 }: BetterAuthCallback): Promise<void> {
   try {
-    await validateCredentialAccount(user.id);
+    await validateAccountCredential(user.id);
 
     await sendPasswordResetEmail({
       email: user.email,

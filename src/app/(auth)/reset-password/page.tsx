@@ -7,11 +7,11 @@ import { useState, useMemo, useEffect } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
-import { AuthFormWrapper } from "@/components/auth/AuthFormWrapper";
-import { AuthHeader } from "@/components/auth/AuthHeader";
-import { PasswordField } from "@/components/auth/PasswordField";
-import { PasswordStrengthIndicator } from "@/components/auth/PasswordStrengthIndicator";
-import { ErrorAlert } from "@/components/auth/ErrorAlert";
+import { AuthFormWrapper } from "@/components/auth-ui/auth-wrapper";
+import { AuthHeader } from "@/components/auth-ui/auth-header";
+import { PasswordField } from "@/components/auth-ui/password-field";
+import { PasswordStrengthIndicator } from "@/components/auth-ui/strength-indicator";
+import { ErrorAlert } from "@/components/auth-ui/error-alert";
 import { ResetPasswordData } from "@/types";
 
 type TokenStatus = "checking" | "valid" | "invalid";

@@ -1,10 +1,10 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { requestPasswordReset, sendVerificationEmail } from "@/actions/auth";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
-import { EmailSent } from "@/components/auth/EmailSent";
+import { EmailSent } from "@/components/auth-ui/email-sent";
+import { requestPasswordReset, sendVerificationEmail } from "@/actions/auth";
 
 export default function EmailSentPage() {
   const searchParams = useSearchParams();
