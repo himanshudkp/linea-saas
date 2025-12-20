@@ -11,14 +11,14 @@ import type {
   ResetPasswordData,
   SignInData,
   SignUpData,
-} from "@/lib/types";
+} from "@/types";
 
 import {
   forgotPasswordSchema,
   resetPasswordSchema,
   signInSchema,
   signUpSchema,
-} from "@/lib/schema";
+} from "@/schema";
 
 import {
   signIn,

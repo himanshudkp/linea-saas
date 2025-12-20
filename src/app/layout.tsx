@@ -5,8 +5,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { ReduxProvider } from "@/providers/redux-provider";
 import { QueryProvider } from "@/providers/query-provider";
+import { extractNameFromEmail } from "@/utils";
 import { getUserProfile } from "@/actions/user";
-import { extractNameFromEmail } from "@/lib/utils";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

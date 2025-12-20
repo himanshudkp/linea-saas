@@ -1,4 +1,4 @@
-import type { Provider, ProviderConfig } from "@/lib/types";
+import type { Provider, ProviderConfig } from "@/types";
 
 export const AUTH_ERROR_MESSAGES = {
   OAUTH_ACCOUNT:

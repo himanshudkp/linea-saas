@@ -3,7 +3,7 @@ import {
   resetPasswordSchema,
   signInSchema,
   signUpSchema,
-} from "@/lib/schema";
+} from "@/schema";
 import { z } from "zod";
 
 export type Provider = "google" | "github";

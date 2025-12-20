@@ -1,17 +1,17 @@
 import { validateAccountCredential } from "@/actions/user";
-import type { BetterAuthCallback } from "./types";
+import type { BetterAuthCallback } from "../types";
 import {
   sendPasswordResetEmail,
   sendPasswordResetSuccessEmail,
   sendVerificationEmail,
-} from "./email";
+} from "../utils/email";
 import {
   AUTH_ERROR_MESSAGES,
   BASE_URL,
   BETTER_AUTH_COOKIE_PREFIX,
   BETTER_AUTH_DB_PROVIDER,
   SESSION_CONFIG,
-} from "./constants";
+} from "../constants";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";

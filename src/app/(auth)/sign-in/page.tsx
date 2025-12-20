@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { Loader2, Mail } from "lucide-react";
 import Link from "next/link";
-import { AuthFormWrapper } from "@/components/auth/AuthFormWrapper";
-import { AuthHeader } from "@/components/auth/AuthHeader";
-import { FormField } from "@/components/auth/FormField";
-import { PasswordField } from "@/components/auth/PasswordField";
-import { ErrorAlert } from "@/components/auth/ErrorAlert";
-import SocialSignInButtons from "@/components/auth/SocialSignInButtons";
+import { AuthFormWrapper } from "@/components/auth-ui/auth-wrapper";
+import { AuthHeader } from "@/components/auth-ui/auth-header";
+import { FormField } from "@/components/auth-ui/form-field";
+import { PasswordField } from "@/components/auth-ui/password-field";
+import { ErrorAlert } from "@/components/auth-ui/error-alert";
+import SocialSignInButtons from "@/components/auth-ui/social-buttons";
 
 export default function SignInPage() {
   const { signInForm, handleSignIn, isLoading } = useAuth();

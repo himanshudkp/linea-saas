@@ -1,4 +1,4 @@
-import AuthLoading from "@/components/auth/AuthLoading";
+import AuthLoading from "@/components/auth-ui/auth-loading";
 
 const AuthLoader = () => {
   return <AuthLoading />;

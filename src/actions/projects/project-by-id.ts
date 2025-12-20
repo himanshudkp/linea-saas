@@ -1,11 +1,11 @@
 "use server";
 
-import type { Projects } from "../../generated/prisma/client";
-import { authenticateUser } from "./user";
-import { prisma } from "@/lib/prisma";
-import { ERRORS } from "@/lib/constants";
-import { successResponse } from "@/lib/utils";
-import type { Response } from "@/lib/types";
+import type { Projects } from "../../../generated/prisma/client";
+import { prisma } from "@/config/prisma";
+import { ERRORS } from "@/constants";
+import { successResponse } from "@/utils";
+import type { Response } from "@/types";
+import { authenticateUser } from "../user/authenticate-user";
 
 export const getProjectById = async (
   projectId: string

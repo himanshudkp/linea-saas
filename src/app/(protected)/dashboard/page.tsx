@@ -1,5 +1,5 @@
 import { getSubscriptionEntitlement } from "@/actions/user";
-import { combinedSlug } from "@/lib/utils";
+import { combinedSlug } from "@/utils";
 import { redirect } from "next/navigation";
 
 const DashboardPage = async () => {

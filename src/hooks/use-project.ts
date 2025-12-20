@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { User } from "../../generated/prisma/client";
 import { toast } from "sonner";
 import { createProjectsStart } from "@/store/slices/projects-slice";
-import { generateGradientThumbnail } from "@/lib/utils";
+import { generateGradientThumbnail } from "@/utils";
 
 export const useProject = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ export const useProject = () => {
   };
   return {
     canCreate: !!user?.id,
-    isCreating: projects.isCreating!,
+    isCreating: projects.isCreating,
     totalProjects: projects.total,
     projects: projects.projects,
     createProject: createProject,

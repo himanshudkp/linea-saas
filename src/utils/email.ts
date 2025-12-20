@@ -1,6 +1,6 @@
 "use server";
 
-import type { EmailParams, SendEmail } from "@/lib/types";
+import type { EmailParams, SendEmail } from "@/types";
 import nodemailer from "nodemailer";
 import type { Transporter } from "nodemailer";
 import { EmailConfigurationError, EmailSendError } from "./error";
@@ -14,7 +14,7 @@ import {
   RETRY_DELAY,
   SMTP_CONFIG,
   VERIFY_EMAIL_SUCCESS_SUBJECT,
-} from "./constants";
+} from "../constants";
 
 let transporter: Transporter | null = null;
 
